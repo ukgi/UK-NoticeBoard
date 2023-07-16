@@ -4,3 +4,8 @@
   align-items: center;
   background-color: var(--nav-bar-color);
 }
+
+.logo {
+  font-size: 1.3em;
+  color: var(--logo-color);
+}

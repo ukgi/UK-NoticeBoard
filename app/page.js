@@ -9,7 +9,7 @@ export default function Home() {
   const [allPosts, setAllPosts] = useState([]);
   useEffect(() => {
     axios
-      .get("/api/posts") //
+      .get("/api/all-posts") //
       .then((res) => setAllPosts(res.data.allPosts));
   }, []);
   return (

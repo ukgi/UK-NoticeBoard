@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 
 export async function connectDatabase() {
   const client = await MongoClient.connect(
@@ -23,4 +23,12 @@ export async function getAllDocuments(client, collection, sort) {
     .toArray();
 
   return AllDocuments;
+}
+
+export async function getSelectedDocuments(client, collection, postId) {
+  const db = client.db();
+  const result = await db
+    .collection(collection)
+    .findOne({ _id: new ObjectId(postId) });
+  return result;
 }
