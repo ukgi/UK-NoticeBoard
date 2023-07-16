@@ -1,10 +1,23 @@
-import Link from "next/link";
+"use client";
+
+import { useEffect, useState } from "react";
+import { Row } from "antd";
+import NoticeCard from "./components/notice-card/NoticeCard";
+import axios from "axios";
 
 export default function Home() {
+  const [allPosts, setAllPosts] = useState([]);
+  useEffect(() => {
+    axios
+      .get("/api/posts") //
+      .then((res) => setAllPosts(res.data.allPosts));
+  }, []);
   return (
-    <div>
-      <h1>홈페이지</h1>
-      <Link href='/list'>리스트 페이지로 이동</Link>
-    </div>
+    <Row gutter={16}>
+      {allPosts &&
+        allPosts.map((postData) => (
+          <NoticeCard key={postData.id} post={postData} />
+        ))}
+    </Row>
   );
 }
