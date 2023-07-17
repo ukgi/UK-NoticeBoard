@@ -32,3 +32,16 @@ export async function getSelectedDocuments(client, collection, postId) {
     .findOne({ _id: new ObjectId(postId) });
   return result;
 }
+
+export async function replaceDocument(
+  client,
+  collection,
+  selectedPost,
+  editPost
+) {
+  const db = client.db();
+  const result = await db
+    .collection(collection)
+    .updateOne(selectedPost, { $set: editPost });
+  return result;
+}
