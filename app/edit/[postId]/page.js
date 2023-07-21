@@ -11,6 +11,7 @@ export default function Edit(props) {
   const [selectedPost, setSelectedPost] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [showCompleteEditMessage, setShowCompleteEditMessage] = useState(false);
+  const [failEdit, setFailEdit] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -45,6 +46,11 @@ export default function Edit(props) {
           setShowCompleteEditMessage(false);
         }, 4000);
         console.log(res.data);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setFailEdit(error.response.data.message);
+        console.error(error.response.data.message);
       });
   }
 
@@ -56,10 +62,10 @@ export default function Edit(props) {
     <div>
       {selectedPost && (
         <>
+          {failEdit && <h1>{failEdit}</h1>}
           {showCompleteEditMessage && <h1>✅수정 완료되었습니다</h1>}
-          {isLoading ? (
-            <p>로딩중...</p>
-          ) : (
+          {isLoading && <h1>로딩중...</h1>}
+          {!isLoading && !failEdit && (
             <Form
               name='basic'
               labelCol={{

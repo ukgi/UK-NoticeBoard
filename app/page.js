@@ -1,23 +1,9 @@
-"use client";
+import { connectDatabase, getAllDocuments } from "@/helpers/db-util";
+import CardList from "./components/card-list/CardList";
 
-import { useEffect, useState } from "react";
-import { Row } from "antd";
-import NoticeCard from "./components/notice-card/NoticeCard";
-import axios from "axios";
+export default async function Home() {
+  const client = await connectDatabase();
+  const allPosts = await getAllDocuments(client, "post", { _id: -1 });
 
-export default function Home() {
-  const [allPosts, setAllPosts] = useState([]);
-  useEffect(() => {
-    axios
-      .get("/api/all-posts") //
-      .then((res) => setAllPosts(res.data.allPosts));
-  }, []);
-  return (
-    <Row gutter={16}>
-      {allPosts &&
-        allPosts.map((postData) => (
-          <NoticeCard key={postData.id} post={postData} />
-        ))}
-    </Row>
-  );
+  return <CardList allPosts={allPosts} />;
 }

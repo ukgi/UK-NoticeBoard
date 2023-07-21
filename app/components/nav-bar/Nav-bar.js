@@ -24,9 +24,6 @@ export default function NavigationBar() {
         <Button type='primary' onClick={linkToWritePageHandler}>
           작성하기
         </Button>
-        <Button type='primary' danger>
-          삭제하기
-        </Button>
       </Space>
     </Header>
   );
