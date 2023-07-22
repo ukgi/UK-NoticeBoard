@@ -5,6 +5,6 @@ export default async function handler(req, res) {
     const client = await connectDatabase();
     const allPosts = await getAllDocuments(client, "post", { _id: -1 });
 
-    return res.status(200).json({ allPosts });
+    return res.status(200).json(allPosts);
   }
 }

@@ -3,7 +3,7 @@ import { MongoClient, ObjectId } from "mongodb";
 export async function connectDatabase() {
   try {
     const client = await MongoClient.connect(
-      "mongodb+srv://UKGI:xn1945qh@cluster0.iwnfbid.mongodb.net/forum?retryWrites=true&w=majority"
+      process.env.NEXT_PUBLIC_MONGODB_CONNECT_DB
     );
     return client;
   } catch (error) {

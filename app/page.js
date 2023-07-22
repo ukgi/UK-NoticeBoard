@@ -1,9 +1,14 @@
-import { connectDatabase, getAllDocuments } from "@/helpers/db-util";
-import CardList from "./components/card-list/CardList";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { getServerSession } from "next-auth";
 
 export default async function Home() {
-  const client = await connectDatabase();
-  const allPosts = await getAllDocuments(client, "post", { _id: -1 });
-
-  return <CardList allPosts={allPosts} />;
+  // let session = await getServerSession(authOptions);
+  // if (session) {
+  //   console.log(session);
+  // }
+  return (
+    <>
+      <h1>홈 화면</h1>
+    </>
+  );
 }

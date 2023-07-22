@@ -8,7 +8,7 @@ export default function CardList({ allPosts }) {
     <Row gutter={16}>
       {allPosts &&
         allPosts.map((postData) => (
-          <NoticeCard key={postData.id} post={postData} />
+          <NoticeCard key={postData._id} post={postData} />
         ))}
     </Row>
   );
