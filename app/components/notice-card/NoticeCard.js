@@ -5,21 +5,34 @@ import { Card, Col } from "antd";
 import { Button } from "antd";
 import Link from "next/link";
 import axios from "axios";
+import { useLoginContext } from "@/app/context/LoginContext";
+import { useSession } from "next-auth/react";
 
 export default function NoticeCard({ post }) {
   const { author, description, id, title, writeDate, _id } = post;
-
+  const session = useSession();
+  console.log(session);
   function deleteHandler() {
     const result = confirm("삭제하시겠습니까?");
     if (result) {
+      if (session.status === "unauthenticated") {
+        return alert("로그인이 필요한 서비스입니다...로그인을 해주세요");
+      }
       axios
         .delete(`/api/delete/delete-post`, {
           data: {
             selectedPostId: _id,
+            author,
           },
         }) //
-        .then((res) => console.log(res.data))
-        .catch((err) => console.error(err.response.data.error));
+        .then((res) => {
+          console.log(res.data);
+          alert(res.data.message);
+        })
+        .catch((err) => {
+          console.error(err.response.data.error);
+          alert(err.response.data.error);
+        });
     }
   }
 

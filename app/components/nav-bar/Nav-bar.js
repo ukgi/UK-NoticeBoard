@@ -69,6 +69,15 @@ export default function NavigationBar() {
           </>
         ) : (
           <>
+            {isHome ? (
+              <Button type='primary' onClick={linkToListPage}>
+                전체 글보기
+              </Button>
+            ) : (
+              <Button type='primary' onClick={linkToHomePage}>
+                홈으로 돌아가기
+              </Button>
+            )}
             <Button type='primary' onClick={signIn}>
               <LoginOutlined style={loginIconStyle} />
               로그인

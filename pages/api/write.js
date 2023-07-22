@@ -18,6 +18,7 @@ export default async function handler(req, res) {
       }
       try {
         req.body.author = session.user.name;
+        req.body.userEmail = session.user.email;
         const inputData = req.body;
 
         if (
