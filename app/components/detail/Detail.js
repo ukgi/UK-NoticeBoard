@@ -3,9 +3,14 @@
 import React from "react";
 import { Descriptions } from "antd";
 import Link from "next/link";
+import { useLoginContext } from "@/app/context/LoginContext";
+import { useSession } from "next-auth/react";
 
 export default function Detail({ data }) {
-  const { author, description, title, writeDate, _id } = data;
+  const { author, description, title, writeDate, _id, userEmail } = data;
+  const userData = useLoginContext();
+  const session = useSession();
+
   return (
     <>
       <Descriptions title='세부 정보' bordered>
@@ -16,7 +21,11 @@ export default function Detail({ data }) {
         </Descriptions.Item>
         <Descriptions.Item label='작성글'>{description}</Descriptions.Item>
       </Descriptions>
-      <Link href={`/edit/${_id}`}>수정하기</Link>
+      {userData.loginData &&
+        session &&
+        session.data.user.email === userEmail && (
+          <Link href={`/edit/${_id}`}>수정하기</Link>
+        )}
     </>
   );
 }

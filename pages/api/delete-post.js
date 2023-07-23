@@ -4,7 +4,7 @@ import {
   getSelectedDocuments,
 } from "@/helpers/db-util";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]";
+import { authOptions } from "./auth/[...nextauth]";
 
 export default async function handler(req, res) {
   if (req.method === "DELETE") {
@@ -16,27 +16,28 @@ export default async function handler(req, res) {
         "post",
         req.body.selectedPostId
       );
-      if (session.user.email !== selectedPost.userEmail) throw new Error();
-    } catch (error) {
-      return res
-        .status(500)
-        .json({ error: "자신이 작성하지 않은 글은 삭제할 수 없습니다...❌" });
-    }
-    try {
-      const client = await connectDatabase();
+
+      if (!selectedPost) {
+        throw new Error("이미 삭제되었습니다...");
+      }
+      if (session.user.email !== selectedPost.userEmail) {
+        throw new Error("자신이 작성하지 않은 글은 삭제할 수 없습니다...❌");
+      }
+
       const result = await deleteSelectedDocument(
         client,
         "post",
         req.body.selectedPostId
       );
+
       if (result.deletedCount === 1) {
         res.status(200).json({ message: "삭제요청 완료...✅", result });
         return client.close();
       } else {
-        throw new Error();
+        throw new Error("삭제요청이 실패했습니다...😱");
       }
     } catch (error) {
-      res.status(500).json({ error: "삭제요청이 실패했습니다...😱" });
+      res.status(500).json({ error: error.message });
     }
   }
 }
