@@ -39,9 +39,11 @@ export async function getSelectedDocuments(client, collection, postId) {
   const result = await db
     .collection(collection)
     .findOne({ _id: new ObjectId(postId) });
+
   if (result) {
     result._id = result._id.toString();
   }
+
   return result;
 }
 
@@ -56,9 +58,7 @@ export async function replaceDocument(
   const result = await db
     .collection(collection)
     .updateOne({ _id: new ObjectId(selectedPostId) }, { $set: editPost });
-  if (result) {
-    result._id = result._id.toString();
-  }
+
   return result;
 }
 
