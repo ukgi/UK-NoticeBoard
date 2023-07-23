@@ -15,6 +15,12 @@ export default function ProtectedRoute({ children, postId }) {
       .catch(console.error);
   }, [postId]);
 
+  console.log(session);
+
+  if (session && session.data.user.email === "admin@admin.com") {
+    return children;
+  }
+
   if (session.status === "unauthenticated") {
     return <h1>해당 경로로 들어갈 수 없습니다...로그인 하세요...❌</h1>;
   }

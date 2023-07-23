@@ -34,6 +34,12 @@ export default function NavigationBar() {
     router.push("/");
   }
 
+  function linkToRegisterPage() {
+    router.push("/register");
+  }
+
+  // 네비게이션 바에서 context 데이터 변경
+  // useSession 있으니까 굳이 context를 이용할 필요는 없음
   useEffect(() => {
     if (session.status === "authenticated") {
       return loginContext.loginHandler(session);
@@ -51,6 +57,9 @@ export default function NavigationBar() {
       <Space wrap>
         {loginContext.loginData ? (
           <>
+            {loginContext.loginData.data.user.email === "admin@admin.com" && (
+              <Button>ADMIN</Button>
+            )}
             {isHome ? (
               <Button type='primary' onClick={linkToListPage}>
                 전체 글보기
@@ -81,6 +90,9 @@ export default function NavigationBar() {
             <Button type='primary' onClick={signIn}>
               <LoginOutlined style={loginIconStyle} />
               로그인
+            </Button>
+            <Button type='primary' onClick={linkToRegisterPage}>
+              회원가입
             </Button>
           </>
         )}

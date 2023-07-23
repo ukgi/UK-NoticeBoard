@@ -76,3 +76,10 @@ export async function deleteSelectedDocument(
 
   return result;
 }
+
+// find by email
+export async function findByEmail(client, email) {
+  const db = client.db();
+  const user = await db.collection("user_cred").findOne({ email });
+  return user;
+}

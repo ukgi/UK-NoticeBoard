@@ -34,9 +34,7 @@ export default async function handler(req, res) {
         return res.status(200).json({ message: "처리완료", inputData });
       } catch (err) {
         client.close();
-        return res
-          .status(500)
-          .json({ error: "데이터베이스에 입력을 실패했습니다..." });
+        return res.status(500).json({ error: err.message });
       }
     } else {
       return res

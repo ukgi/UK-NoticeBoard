@@ -4,7 +4,8 @@ import React, { useEffect, useState } from "react";
 import { Button, DatePicker, Form, Input } from "antd";
 import axios from "axios";
 import moment from "moment"; // moment.js import
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useSession } from "next-auth/react";
 const { TextArea } = Input;
 
 export default function Edit({ postId }) {
@@ -13,6 +14,9 @@ export default function Edit({ postId }) {
   const [showCompleteEditMessage, setShowCompleteEditMessage] = useState(false);
   const [failEdit, setFailEdit] = useState(false);
   const router = useRouter();
+  const session = useSession();
+
+  console.log("client", session);
 
   useEffect(() => {
     axios
@@ -58,9 +62,15 @@ export default function Edit({ postId }) {
     return router.back();
   }
 
+  console.log("selectedPost", selectedPost);
   return (
     <div>
-      {selectedPost && (
+      {(selectedPost &&
+        session.data &&
+        selectedPost.userEmail === session.data.user.email) ||
+      (selectedPost &&
+        session.data &&
+        session.data.user.email === "admin@admin.com") ? (
         <>
           {failEdit && <h1>{failEdit}</h1>}
           {showCompleteEditMessage && <h1>✅수정 완료되었습니다</h1>}
@@ -159,6 +169,8 @@ export default function Edit({ postId }) {
             </Form>
           )}
         </>
+      ) : (
+        <></>
       )}
     </div>
   );

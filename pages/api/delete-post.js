@@ -17,10 +17,15 @@ export default async function handler(req, res) {
         req.body.selectedPostId
       );
 
+      console.log("session", session.user);
+
       if (!selectedPost) {
         throw new Error("이미 삭제되었습니다...");
       }
-      if (session.user.email !== selectedPost.userEmail) {
+      if (
+        session.user.email !== "admin@admin.com" &&
+        session.user.email !== selectedPost.userEmail
+      ) {
         throw new Error("자신이 작성하지 않은 글은 삭제할 수 없습니다...❌");
       }
 

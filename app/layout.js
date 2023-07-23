@@ -6,6 +6,7 @@ import NavigationBar from "./components/nav-bar/Nav-bar";
 import { Layout } from "antd";
 import { LoginContextProvider } from "./context/LoginContext";
 import { SessionProvider } from "next-auth/react";
+import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 const { Content, Footer } = Layout;
 
 const inter = Inter({ subsets: ["latin"] });

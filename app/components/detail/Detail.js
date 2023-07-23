@@ -11,6 +11,8 @@ export default function Detail({ data }) {
   const userData = useLoginContext();
   const session = useSession();
 
+  console.log(session);
+
   return (
     <>
       <Descriptions title='세부 정보' bordered>
@@ -21,11 +23,16 @@ export default function Detail({ data }) {
         </Descriptions.Item>
         <Descriptions.Item label='작성글'>{description}</Descriptions.Item>
       </Descriptions>
-      {userData.loginData &&
-        session &&
-        session.data.user.email === userEmail && (
-          <Link href={`/edit/${_id}`}>수정하기</Link>
-        )}
+      {(userData.loginData &&
+        session.data &&
+        session.data.user.email === userEmail) ||
+      (userData.loginData &&
+        session.data &&
+        session.data.user.email === "admin@admin.com") ? (
+        <Link href={`/edit/${_id}`}>수정하기</Link>
+      ) : (
+        <></>
+      )}
     </>
   );
 }
