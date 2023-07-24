@@ -11,6 +11,7 @@ export default async function handler(req, res) {
         "post",
         selectedPostId
       );
+
       if (!selectedPost) {
         throw new Error("해당 게시물은 존재하지 않습니다...");
       }

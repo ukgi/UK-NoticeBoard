@@ -30,7 +30,7 @@ export default function NavigationBar() {
 
   return (
     <Header className={styles.header}>
-      <Link className={styles.logo} href="/">
+      <Link className={styles.logo} href='/'>
         UKGI NOTICEBOARD
       </Link>
       <Space wrap>
@@ -40,14 +40,14 @@ export default function NavigationBar() {
             <Link href={"/write"}>
               <EditOutlined style={{ fontSize: "22px", color: "white" }} />
             </Link>
-            <Button type="primary" danger onClick={signOut}>
+            <Button type='primary' danger onClick={signOut}>
               로그아웃
             </Button>
           </>
         ) : (
           <>
             {isHome ? (
-              <Button type="primary" onClick={linkToListPage}>
+              <Button type='primary' onClick={linkToListPage}>
                 전체 글보기
               </Button>
             ) : (
@@ -55,11 +55,11 @@ export default function NavigationBar() {
                 <HomeOutlined style={{ fontSize: "22px", color: "white" }} />
               </Link>
             )}
-            <Button type="primary" onClick={signIn}>
+            <Button type='primary' onClick={signIn}>
               <LoginOutlined style={loginIconStyle} />
               로그인
             </Button>
-            <Button type="primary" onClick={linkToRegisterPage}>
+            <Button type='primary' onClick={linkToRegisterPage}>
               회원가입
             </Button>
           </>
