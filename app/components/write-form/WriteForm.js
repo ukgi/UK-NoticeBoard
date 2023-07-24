@@ -14,19 +14,15 @@ export default function WriteForm() {
     axios
       .post("/api/write", values)
       .then((res) => {
-        console.log(res.data);
         setIsLoading(false);
         setShowSuccessMessage(true);
         const timer = setTimeout(() => {
           setShowSuccessMessage(false);
         }, 4000);
       })
-      .catch(console.error);
+      .catch((err) => alert(err.response.data));
   }
 
-  function onFinishFailed(errorInfo) {
-    console.log("Failed:", errorInfo);
-  }
   return (
     <>
       {showSuccessMessage && <h2>성공적으로 등록되었습니다!</h2>}
@@ -34,7 +30,7 @@ export default function WriteForm() {
         <p>로딩중...⏰</p>
       ) : (
         <Form
-          name='basic'
+          name="basic"
           labelCol={{
             span: 8,
           }}
@@ -48,12 +44,11 @@ export default function WriteForm() {
             remember: true,
           }}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete='off'
+          autoComplete="off"
         >
           <Form.Item
-            label='제목'
-            name='title'
+            label="제목"
+            name="title"
             rules={[
               {
                 required: true,
@@ -64,8 +59,8 @@ export default function WriteForm() {
             <Input />
           </Form.Item>
           <Form.Item
-            label='작성글'
-            name='description'
+            label="작성글"
+            name="description"
             rules={[
               {
                 required: true,
@@ -76,8 +71,8 @@ export default function WriteForm() {
             <TextArea rows={4} />
           </Form.Item>
           <Form.Item
-            label='작성날짜'
-            name='writeDate'
+            label="작성날짜"
+            name="writeDate"
             rules={[
               {
                 required: true,
@@ -93,7 +88,7 @@ export default function WriteForm() {
               span: 16,
             }}
           >
-            <Button type='primary' htmlType='submit'>
+            <Button type="primary" htmlType="submit">
               Submit
             </Button>
           </Form.Item>

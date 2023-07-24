@@ -1,20 +1,18 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Space } from "antd";
 import { Layout } from "antd";
-import { LoginOutlined } from "@ant-design/icons";
+import { LoginOutlined, HomeOutlined, EditOutlined } from "@ant-design/icons";
 const { Header } = Layout;
 import styles from "./nav-bar.module.css";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useLoginContext } from "@/app/context/LoginContext";
 
 export default function NavigationBar() {
   const router = useRouter();
   const session = useSession();
-  const loginContext = useLoginContext();
   const pathname = usePathname();
   const [isHome, setIsHome] = useState(false);
 
@@ -22,76 +20,55 @@ export default function NavigationBar() {
     setIsHome(pathname === "/");
   }, [pathname]);
 
-  function linkToWritePageHandler() {
-    router.push("/write");
-  }
-
   function linkToListPage() {
     router.push("/list");
-  }
-
-  function linkToHomePage() {
-    router.push("/");
   }
 
   function linkToRegisterPage() {
     router.push("/register");
   }
 
-  // 네비게이션 바에서 context 데이터 변경
-  // useSession 있으니까 굳이 context를 이용할 필요는 없음
-  useEffect(() => {
-    if (session.status === "authenticated") {
-      return loginContext.loginHandler(session);
-    }
-    if (session.status === "unauthenticated") {
-      return loginContext.logoutHandler();
-    }
-  }, [session]);
-
   return (
     <Header className={styles.header}>
-      <Link className={styles.logo} href='/'>
+      <Link className={styles.logo} href="/">
         UKGI NOTICEBOARD
       </Link>
       <Space wrap>
-        {loginContext.loginData ? (
+        {session.data ? (
           <>
-            {loginContext.loginData.data.user.email === "admin@admin.com" && (
-              <Button>ADMIN</Button>
-            )}
+            {session.data.user.email === "admin@admin.com" && <h1>ADMIN</h1>}
             {isHome ? (
-              <Button type='primary' onClick={linkToListPage}>
+              <Button type="primary" onClick={linkToListPage}>
                 전체 글보기
               </Button>
             ) : (
-              <Button type='primary' onClick={linkToHomePage}>
-                홈으로 돌아가기
-              </Button>
+              <Link href={"/"}>
+                <HomeOutlined style={{ fontSize: "22px", color: "white" }} />
+              </Link>
             )}
-            <Button type='primary' onClick={linkToWritePageHandler}>
-              작성하기
-            </Button>
-            <Button type='primary' danger onClick={signOut}>
+            <Link href={"/write"}>
+              <EditOutlined style={{ fontSize: "22px", color: "white" }} />
+            </Link>
+            <Button type="primary" danger onClick={signOut}>
               로그아웃
             </Button>
           </>
         ) : (
           <>
             {isHome ? (
-              <Button type='primary' onClick={linkToListPage}>
+              <Button type="primary" onClick={linkToListPage}>
                 전체 글보기
               </Button>
             ) : (
-              <Button type='primary' onClick={linkToHomePage}>
-                홈으로 돌아가기
-              </Button>
+              <Link href={"/"}>
+                <HomeOutlined />
+              </Link>
             )}
-            <Button type='primary' onClick={signIn}>
+            <Button type="primary" onClick={signIn}>
               <LoginOutlined style={loginIconStyle} />
               로그인
             </Button>
-            <Button type='primary' onClick={linkToRegisterPage}>
+            <Button type="primary" onClick={linkToRegisterPage}>
               회원가입
             </Button>
           </>

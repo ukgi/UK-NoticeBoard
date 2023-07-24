@@ -7,7 +7,7 @@ export async function connectDatabase() {
     );
     return client;
   } catch (error) {
-    console.error("클라이언트 연결에 실패했습니다...😱", error);
+    throw new Error("클라이언트 연결에 실패했습니다...😱");
   }
 }
 

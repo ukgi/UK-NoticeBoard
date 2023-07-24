@@ -10,6 +10,9 @@ export default async function handler(req, res) {
   if (req.method === "DELETE") {
     try {
       const session = await getServerSession(req, res, authOptions);
+      if (!session) {
+        throw new Error("로그인이 필요합니다...로그인해주세요");
+      }
       const client = await connectDatabase();
       const selectedPost = await getSelectedDocuments(
         client,
@@ -17,11 +20,10 @@ export default async function handler(req, res) {
         req.body.selectedPostId
       );
 
-      console.log("session", session.user);
-
       if (!selectedPost) {
         throw new Error("이미 삭제되었습니다...");
       }
+
       if (
         session.user.email !== "admin@admin.com" &&
         session.user.email !== selectedPost.userEmail
@@ -42,7 +44,7 @@ export default async function handler(req, res) {
         throw new Error("삭제요청이 실패했습니다...😱");
       }
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).json(error.message);
     }
   }
 }
