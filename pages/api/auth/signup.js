@@ -12,8 +12,6 @@ export default async function handler(req, res) {
       const client = await connectDatabase();
       const user = await findByEmail(client, email);
 
-      console.log(user);
-
       if (user) {
         throw new Error("이미 가입한 정보입니다...");
       }

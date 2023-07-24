@@ -1,21 +1,11 @@
 "use client";
 
 import { Button, Form, Input } from "antd";
-import axios from "axios";
 
-export default function Comment({ parentId }) {
-  function onFinish(values) {
-    axios
-      .post("/api/comment", {
-        ...values,
-        parent: parentId,
-      })
-      .then((res) => console.log(res))
-      .catch((err) => console.error(err.response.data));
-  }
+export default function WriteComment({ onFinish }) {
   return (
     <Form
-      name="commentForm"
+      name='commentForm'
       labelCol={{
         span: 8,
       }}
@@ -29,11 +19,11 @@ export default function Comment({ parentId }) {
         remember: true,
       }}
       onFinish={onFinish}
-      autoComplete="off"
+      autoComplete='off'
     >
       <Form.Item
-        label="Comment"
-        name="comment"
+        label='Comment'
+        name='comment'
         rules={[
           {
             message: "답글을 남겨주세요...",
@@ -48,7 +38,7 @@ export default function Comment({ parentId }) {
           span: 16,
         }}
       >
-        <Button type="primary" htmlType="submit">
+        <Button type='primary' htmlType='submit'>
           Submit
         </Button>
       </Form.Item>

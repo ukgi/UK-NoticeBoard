@@ -1,14 +1,12 @@
 import Detail from "@/app/components/detail/Detail";
-import { connectDatabase, getSelectedDocuments } from "@/helpers/db-util";
 
-// api 라우팅을 이용해서 클라이언트 컴포넌트로 구현해보기
+export const dynamic = "force-static";
+
 export default async function DetailPage(props) {
-  const client = await connectDatabase();
-  const selectedPost = await getSelectedDocuments(
-    client,
-    "post",
-    props.params.postId
-  );
+  const res = await fetch(`http://localhost:3000/api/${props.params.postId}`, {
+    next: { revalidate: 10 },
+  });
+  const selectedPost = await res.json();
 
   return <Detail data={selectedPost} />;
 }
