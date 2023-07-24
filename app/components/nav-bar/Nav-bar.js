@@ -37,15 +37,6 @@ export default function NavigationBar() {
         {session.data ? (
           <>
             {session.data.user.email === "admin@admin.com" && <h1>ADMIN</h1>}
-            {isHome ? (
-              <Button type="primary" onClick={linkToListPage}>
-                전체 글보기
-              </Button>
-            ) : (
-              <Link href={"/"}>
-                <HomeOutlined style={{ fontSize: "22px", color: "white" }} />
-              </Link>
-            )}
             <Link href={"/write"}>
               <EditOutlined style={{ fontSize: "22px", color: "white" }} />
             </Link>
@@ -61,7 +52,7 @@ export default function NavigationBar() {
               </Button>
             ) : (
               <Link href={"/"}>
-                <HomeOutlined />
+                <HomeOutlined style={{ fontSize: "22px", color: "white" }} />
               </Link>
             )}
             <Button type="primary" onClick={signIn}>

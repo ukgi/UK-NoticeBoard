@@ -1,13 +1,13 @@
 "use client";
 
-import React from "react";
 import { Descriptions } from "antd";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { Divider } from "antd";
+import Comment from "../comment/Comment";
 
 export default function Detail({ data }) {
   const { author, description, title, writeDate, _id, userEmail } = data;
-
   const session = useSession();
 
   return (
@@ -20,12 +20,15 @@ export default function Detail({ data }) {
         </Descriptions.Item>
         <Descriptions.Item label="작성글">{description}</Descriptions.Item>
       </Descriptions>
+
       {(session.data && session.data.user.email === userEmail) ||
       (session.data && session.data.user.email === "admin@admin.com") ? (
         <Link href={`/edit/${_id}`}>수정하기</Link>
       ) : (
         <></>
       )}
+      <Divider orientation="left">댓글</Divider>
+      <Comment parentId={_id} />
     </>
   );
 }
