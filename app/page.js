@@ -1,6 +1,6 @@
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import { getServerSession } from "next-auth";
-import List from "./list/page";
+import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import { getServerSession } from 'next-auth';
+import List from './list/page';
 
 export default async function Home() {
   const session = await getServerSession(authOptions);

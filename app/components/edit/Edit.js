@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import { Button, DatePicker, Form, Input } from "antd";
-import axios from "axios";
-import moment from "moment"; // moment.js import
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+import React, { useEffect, useState } from 'react';
+import { Button, DatePicker, Form, Input } from 'antd';
+import axios from 'axios';
+import moment from 'moment'; // moment.js import
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 const { TextArea } = Input;
 
 export default function Edit({ postId }) {
@@ -20,7 +20,7 @@ export default function Edit({ postId }) {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`/api/${postId}`)
+      .get(`/api/post/${postId}`)
       .then((res) => {
         setIsLoading(false);
         // moment.js 객체로 변환
@@ -37,7 +37,7 @@ export default function Edit({ postId }) {
     // 폼 데이터를 서버로 제출하는 로직 구현
     setIsLoading(true);
     axios
-      .post("/api/edit", {
+      .post('/api/edit', {
         editPostId: postId,
         editData: values,
       })
@@ -66,12 +66,8 @@ export default function Edit({ postId }) {
   }
 
   if (
-    (selectedPost &&
-      session.data &&
-      selectedPost.userEmail === session.data.user.email) ||
-    (selectedPost &&
-      session.data &&
-      session.data.user.email === process.env.NEXT_PUBLIC_ADMIN_USER_EMAIL)
+    (selectedPost && session.data && selectedPost.userEmail === session.data.user.email) ||
+    (selectedPost && session.data && session.data.user.email === process.env.NEXT_PUBLIC_ADMIN_USER_EMAIL)
   ) {
     return (
       <>
@@ -99,7 +95,7 @@ export default function Edit({ postId }) {
               rules={[
                 {
                   required: true,
-                  message: "제목을 지어주세요!",
+                  message: '제목을 지어주세요!',
                 },
               ]}
             >
@@ -111,7 +107,7 @@ export default function Edit({ postId }) {
               rules={[
                 {
                   required: true,
-                  message: "작성글을 기입해주세요!",
+                  message: '작성글을 기입해주세요!',
                 },
               ]}
             >
@@ -123,7 +119,7 @@ export default function Edit({ postId }) {
               rules={[
                 {
                   required: true,
-                  message: "작성한 날짜를 기입해주세요!",
+                  message: '작성한 날짜를 기입해주세요!',
                 },
               ]}
             >
@@ -146,12 +142,7 @@ export default function Edit({ postId }) {
               span: 16,
             }}
           >
-            <Button
-              type="primary"
-              htmlType="button"
-              danger
-              onClick={handleFormCancel}
-            >
+            <Button type="primary" htmlType="button" danger onClick={handleFormCancel}>
               Cancel
             </Button>
           </Form.Item>
