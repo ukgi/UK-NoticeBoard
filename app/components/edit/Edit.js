@@ -20,7 +20,7 @@ export default function Edit({ postId }) {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`/api/${postId}`)
+      .get(`/api/post/${postId}`)
       .then((res) => {
         setIsLoading(false);
         // moment.js 객체로 변환
@@ -78,7 +78,7 @@ export default function Edit({ postId }) {
         {failEdit && <h1>{failEdit}</h1>}
         {showCompleteEditMessage && <h1>✅수정 완료되었습니다</h1>}
         <Form
-          name="basic"
+          name='basic'
           labelCol={{
             span: 8,
           }}
@@ -90,12 +90,12 @@ export default function Edit({ postId }) {
           }}
           initialValues={selectedPost} // 초기값을 initialValues로 설정
           onFinish={handleFormSubmit} // 폼 제출 핸들러
-          autoComplete="off"
+          autoComplete='off'
         >
           <>
             <Form.Item
-              label="제목"
-              name="title"
+              label='제목'
+              name='title'
               rules={[
                 {
                   required: true,
@@ -106,8 +106,8 @@ export default function Edit({ postId }) {
               <Input />
             </Form.Item>
             <Form.Item
-              label="작성글"
-              name="description"
+              label='작성글'
+              name='description'
               rules={[
                 {
                   required: true,
@@ -118,8 +118,8 @@ export default function Edit({ postId }) {
               <TextArea rows={4} />
             </Form.Item>
             <Form.Item
-              label="작성날짜"
-              name="writeDate"
+              label='작성날짜'
+              name='writeDate'
               rules={[
                 {
                   required: true,
@@ -136,7 +136,7 @@ export default function Edit({ postId }) {
               span: 16,
             }}
           >
-            <Button type="primary" htmlType="submit">
+            <Button type='primary' htmlType='submit'>
               Submit
             </Button>
           </Form.Item>
@@ -147,8 +147,8 @@ export default function Edit({ postId }) {
             }}
           >
             <Button
-              type="primary"
-              htmlType="button"
+              type='primary'
+              htmlType='button'
               danger
               onClick={handleFormCancel}
             >
