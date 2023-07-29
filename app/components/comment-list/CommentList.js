@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import axios from "axios";
-import { useEffect, useState } from "react";
-import Comment from "./Comment";
-import WriteComment from "../write-comment/WriteComment";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import Comment from './Comment';
+import WriteComment from '../write-comment/WriteComment';
 
 export default function CommentList({ postId, parentId, author }) {
   const [commentList, setCommentList] = useState();
@@ -15,7 +15,7 @@ export default function CommentList({ postId, parentId, author }) {
 
   async function getCommentList() {
     axios
-      .get("/api/show-comment", {
+      .get('/api/show-comment', {
         params: { postId },
       })
       .then((res) => setCommentList(res.data))
@@ -24,7 +24,7 @@ export default function CommentList({ postId, parentId, author }) {
 
   function onFinish(values) {
     axios
-      .post("/api/comment", {
+      .post('/api/post/comment', {
         ...values,
         parent: parentId,
         author,
