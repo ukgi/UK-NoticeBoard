@@ -1,9 +1,9 @@
-import NextAuth from 'next-auth';
-import GithubProvider from 'next-auth/providers/github';
-import CredentialsProvider from 'next-auth/providers/credentials';
-import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
-import { connectDatabase, findByEmail } from '@/helpers/db-util';
-import bcrypt from 'bcrypt';
+import NextAuth from "next-auth";
+import GithubProvider from "next-auth/providers/github";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
+import { connectDatabase, findByEmail } from "@/helpers/db-util";
+import bcrypt from "bcrypt";
 
 export const authOptions = {
   providers: [
@@ -14,10 +14,10 @@ export const authOptions = {
 
     CredentialsProvider({
       // 1. 로그인페이지 폼을 자동생성해주는 코드
-      name: 'Credentials',
+      name: "Credentials",
       credentials: {
-        email: { label: 'email', type: 'text', placeholder: 'jsmith' },
-        password: { label: 'password', type: 'password' },
+        email: { label: "email", type: "text", placeholder: "jsmith" },
+        password: { label: "password", type: "password" },
       },
 
       // 2. 로그인 요청시, 실행되는 코드
@@ -25,12 +25,15 @@ export const authOptions = {
         const client = await connectDatabase();
         const user = await findByEmail(client, credentials.email);
         if (!user) {
-          console.log('해당 이메일은 없습니다...');
+          console.log("해당 이메일은 없습니다...");
           return null;
         }
-        const pwcheck = await bcrypt.compare(credentials.password, user.password);
+        const pwcheck = await bcrypt.compare(
+          credentials.password,
+          user.password
+        );
         if (!pwcheck) {
-          console.log('비밀번호가 틀렸습니다...');
+          console.log("비밀번호가 틀렸습니다...");
           return null;
         }
 
@@ -41,7 +44,7 @@ export const authOptions = {
 
   // jwt 토큰 방식 + 만료일 설정
   session: {
-    strategy: 'jwt',
+    strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60,
   },
 
